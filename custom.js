@@ -3,7 +3,7 @@ const part1 = function() {
 	$('#part1Error').addClass('d-none');
 	$('#part1Success').addClass('d-none');
 	$.ajax({
-		url: "test.html",
+		url: "https://goodmorning-axa-dev.azure-api.net/register",
 		method: "POST",
 		data: {
 			"Name": $('#part1Name').val(),
