@@ -695,7 +695,7 @@
 						}
 
 						function drawBubbles(text) {
-							const padding = 4;
+							const padding = 8;
 							ctx.font = '18px consolas';
 							const textWidth = ctx.measureText(text).width;
 
@@ -709,26 +709,31 @@
 							const tailWidth = 8;
 							const tailHeight = 24;
 
-							const bubbleX = centerX - (bubbleWidth / 2) + 20;
+							const bubbleX = centerX - (bubbleWidth / 2) + 16;
 							const bubbleY = centerY + tailHeight;
-							const tailX = centerX;
+							const tailX = centerX - 16;
 							const tailY = centerY;
+
+							const curveRadius = padding;
 
 							// Bubble Rectangle
 							ctx.fillStyle = 'white';
 							ctx.strokeStyle = 'black';
 							ctx.lineWidth = 2;
 
+							// Bubble
 							ctx.beginPath();
-							ctx.roundRect(bubbleX, bubbleY, bubbleWidth, bubbleHeight, 4);
-							ctx.fill()
-							ctx.stroke();
-
-							// Bubble Tail
-							ctx.beginPath();
-							ctx.moveTo(tailX, tailY);
-							ctx.lineTo(tailX - ((tailWidth * 3) / 2), tailY + tailHeight)
-							ctx.lineTo(tailX - ((tailWidth * 5) / 2), tailY + tailHeight)
+							ctx.moveTo(tailX - ((tailWidth * 3) / 2), bubbleY)
+							ctx.lineTo(tailX, tailY);
+							ctx.lineTo(tailX - ((tailWidth * 5) / 2), bubbleY)
+							ctx.lineTo(bubbleX + curveRadius, bubbleY)
+							ctx.quadraticCurveTo(bubbleX, bubbleY, bubbleX, bubbleY + curveRadius)
+							ctx.lineTo(bubbleX, bubbleY + bubbleHeight - curveRadius)
+							ctx.quadraticCurveTo(bubbleX, bubbleY + bubbleHeight, bubbleX + curveRadius, bubbleY + bubbleHeight)
+							ctx.lineTo(bubbleX + bubbleWidth - curveRadius, bubbleY + bubbleHeight)
+							ctx.quadraticCurveTo(bubbleX + bubbleWidth, bubbleY + bubbleHeight, bubbleX + bubbleWidth, bubbleY + bubbleHeight - curveRadius)
+							ctx.lineTo(bubbleX + bubbleWidth, bubbleY + curveRadius)
+							ctx.quadraticCurveTo(bubbleX + bubbleWidth, bubbleY, bubbleX + bubbleWidth - curveRadius, bubbleY)
 							ctx.closePath();
 							ctx.fill()
 							ctx.stroke();
